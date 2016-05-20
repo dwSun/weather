@@ -18,21 +18,25 @@ Your last visit is {time}</br>
 @app.route('/', defaults={'name':"Guest"})
 @app.route('/<string:name>' , methods=['GET'])
 def say_hello(name):
-    conn = pymongo.MongoClient(127.8.69.2,27017)
-    #mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
-    #conn = pymongo.MongoClient("127.0.0.1",27017)
-    db = conn.doco #连接库
-    db.authenticate("admin","TmcJvzvXDup_")
+    try:
+        conn = pymongo.MongoClient(127.8.69.2,27017)
+        #mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
+        #conn = pymongo.MongoClient("127.0.0.1",27017)
+        db = conn.doco #连接库
+        db.authenticate("admin","TmcJvzvXDup_")
 
-    visitor = db.visitors.find_one({"name":name})
-    if not visitor:
-        db.visitors.insert_one({'name':name,"count":1,'time':datetime.datetime.now()})
         visitor = db.visitors.find_one({"name":name})
-    else:
-        db.visitors.update_one({'name':name}, {'$inc': {'count': 1},'$set':{'time':datetime.datetime.now()}})
-        visitor["count"] = visitor["count"] +1
+        if not visitor:
+            db.visitors.insert_one({'name':name,"count":1,'time':datetime.datetime.now()})
+            visitor = db.visitors.find_one({"name":name})
+        else:
+            db.visitors.update_one({'name':name}, {'$inc': {'count': 1},'$set':{'time':datetime.datetime.now()}})
+            visitor["count"] = visitor["count"] +1
 
-    return s.format(**visitor)
+            return s.format(**visitor)
+    except Exception as ex:
+        return str(ex)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
