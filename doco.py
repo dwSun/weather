@@ -18,7 +18,7 @@ Your last visit is {time}</br>
 @app.route('/', defaults={'name':"Guest"})
 @app.route('/<string:name>' , methods=['GET'])
 def say_hello(name):
-    conn = pymongo.MongoClient(os.getenv('OPENSHIFT_MONGODB_DB_HOST'),os.getenv('OPENSHIFT_MONGODB_DB_PORT'))
+    conn = pymongo.MongoClient(127.8.69.2,27017)
     #mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/
     #conn = pymongo.MongoClient("127.0.0.1",27017)
     db = conn.doco #连接库
