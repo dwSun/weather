@@ -9,15 +9,12 @@ import datetime
 import requests
 import urllib
 import json
-from flask_cdn import CDN
 
 app = Flask(__name__)
 
-app.config['CDN_DOMAIN'] = 'cdnjs.cloudflare.com/ajax'
-#app.config['CDN_HTTPS'] = True
-app.config['CDN_ENDPOINTS'] = 'libs'
-
-CDN(app)
+@app.template_global()
+def debug():
+    return app.debug
 
 @app.route('/weather', defaults={'name':"北京"})
 @app.route('/weather/<string:name>' , methods=['GET'])
@@ -55,5 +52,5 @@ def say_hello(name):
     return s.format(**visitor)
 
 if __name__ == "__main__":
-    app.run()
-    #app.run(debug=True)
+    #app.run()
+    app.run(debug=True)

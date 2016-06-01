@@ -7,9 +7,16 @@
         doco
     </title>
     {% endblock %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='uikit/2.25.0/css/uikit.almost-flat.min.css') }}">
-    <script src="{{ url_for('static',filename='jquery/2.2.4/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static',filename='uikit/2.25.0/js/uikit.min.js') }}"></script>
+    {% if debug() %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='uikit/2.25.0/css/uikit.almost-flat.min.css') }}">
+        <script src="{{ url_for('static',filename='jquery/2.2.4/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static',filename='uikit/2.25.0/js/uikit.min.js') }}"></script>
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/css/uikit.gradient.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.25.0/js/uikit.min.js"></script>
+    {% endif %}
+
 </head>
 
 <body>
