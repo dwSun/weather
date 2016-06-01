@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="uk-container uk-container-center uk-margin-top">
+    {% if data %}
+    <div class="uk-grid uk-grid-small uk-grid-width-1-1" data-uk-grid-margin data-uk-grid-match>
+        <div class="uk-panel uk-panel-box uk-panel-box-primary uk-h1 uk-text-center">
+            {{ data.currentCity }}
+        </div>
+        <div id="pm25Box" class="uk-panel uk-h2 uk-text-center uk-alert">
+               <div>PM2.5&nbsp;</div><div id="pm25">{{ data.pm25 }}</div>
+       </div>
+       <script>
+        pm = $("#pm25").text()
+        pm = 0+pm
+        if (pm > 50 && pm<100) {
+            $("#pm25Box").addClass("uk-alert-warning")
+        }else if(pm>100) {
+            $("#pm25Box").addClass("uk-alert-danger")
+        }else{
+            $("#pm25Box").addClass("uk-alert-success")
+        }
+       </script>
+    </div>
+    <hr class="uk-grid-divider"/>
+    <ul class="uk-grid uk-grid-small uk-grid-width-medium-1-4 uk-grid-width-small-1-1" data-uk-grid-margin data-uk-grid-match="{target:'.uk-panel'}">
+        {% for day in data.weather_data %}
+        <li>
+            <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                <h3 class="uk-text-danger uk-text-center">{{ day.date }}</h3>
+                <div class="uk-flex uk-flex-space-between">
+                    <div>
+                        <p>{{ day.weather }}</p>
+                        <p>{{ day.wind }}</p>
+                        <p>{{ day.temperature }}</p>
+                    </div>
+                    <div class="uk-flex uk-flex-column">
+                        <img  src="{{ day.dayPictureUrl }}" alt="白天">
+                        <img src="{{ day.nightPictureUrl }}" alt="夜晚">
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <hr class="uk-grid-divider"/>
+    <h2 class="uk-panel uk-panel-box uk-panel-box-secondary uk-text-center  uk-text-bold uk-text-primary">今日指数</h2>
+    <ul class="uk-grid uk-grid-small uk-grid-width-medium-1-6  uk-grid-width-small-1-1" data-uk-grid-margin data-uk-grid-match="{target:'.uk-panel'}">
+        {% for day in data.index %}
+        <li>
+            <div class="uk-panel uk-panel-box uk-panel-box-hover">
+                <h3 class="uk-text-primary  uk-text-center">{{ day.tipt }}</h3>
+                <p class="uk-text-center">{{ day.zs }}</p>
+                <p>{{ day.des }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div>
+            <h1>Error</h1>
+            <p class="uk-notify-message-danger uk-text-large">
+                The weather service is currently not available!
+            </p>
+        </div>
+    {% endif %}
+    </div>
+    {% endblock %}
