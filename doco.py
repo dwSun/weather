@@ -12,11 +12,12 @@ import json
 
 app = Flask(__name__)
 
+
 @app.template_global()
 def debug():
     return app.debug
 
-@app.route('/weather', defaults={'name':"北京"})
+@app.route('/weather/', defaults={'name':"北京"})
 @app.route('/weather/<string:name>' , methods=['GET'])
 def weather(name):
     r=requests.get("http://api.map.baidu.com/telematics/v3/weather?location={0}&output=json&ak=9393a3754af3170551a239fd7bfd7011".format(name))
@@ -24,6 +25,18 @@ def weather(name):
         return render_template("weather.html",data=json.loads(r.text)['results'][0])
     else:
         return render_template("weather.html",data=None)
+
+@app.route('/weatherapi/')
+def weatherAPI():
+    try:
+        conn = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'],int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
+        db = conn.doco #连接库
+        db.authenticate("admin","TmcJvzvXDup_")
+    except KeyError:
+        conn = pymongo.MongoClient("127.0.0.1",27017)
+        db = conn.doco #连接库
+
+    return json.dumps(list(db.weather.find({},{'_id':0})))
 
 s="""
 Hi {name}.</br>
@@ -50,6 +63,12 @@ def say_hello(name):
         db.visitors.update_one({'name':name}, {'$inc': {'count': 1},'$set':{'time':datetime.datetime.now()}})
         visitor["count"] = visitor["count"] +1
     return s.format(**visitor)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
+
 
 if __name__ == "__main__":
     #app.run()
