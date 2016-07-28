@@ -12,7 +12,7 @@
        <script>
         pm = $("#pm25").text()
         pm = 0+pm
-        if (pm > 50 && pm<100) {
+        if (pm > 50 && pm<=100) {
             $("#pm25Box").addClass("uk-alert-warning")
         }else if(pm>100) {
             $("#pm25Box").addClass("uk-alert-danger")
