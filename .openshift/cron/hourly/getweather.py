@@ -9,8 +9,6 @@ import urllib
 import json
 import sys
 
-from multiprocessing.dummy import Pool as ThreadPool
-
 tz = pytz.timezone('Asia/Shanghai')
 now = datetime.datetime.now(tz)
 
@@ -45,11 +43,5 @@ def getWeather(city):
     #db.weather.drop()
 
 if __name__ == '__main__':
-    # Make the Pool of workers
-    pool = ThreadPool()
-    # Open the cmds in their own threads
-    # and return the results
-    results = pool.map(getWeather, citys)
-    #close the pool and wait for the work to finish
-    pool.close()
-    pool.join()
+    for city in citys:
+        getWeather(city)
