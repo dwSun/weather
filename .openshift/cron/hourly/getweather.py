@@ -31,11 +31,11 @@ def getWeather(city):
         sys.exit(0)
     try:
         conn = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'],int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
-        db = conn.doco #连接库
+        db = conn.weather #连接库
         db.authenticate("admin","16cFcmpKvWyl")
     except KeyError:
         conn = pymongo.MongoClient("127.0.0.1",27017)
-        db = conn.doco #连接库
+        db = conn.weather #连接库
 
     #print(json.dumps(list(db.weather.find({},{'_id':0}))))
 

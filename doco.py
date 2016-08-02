@@ -30,11 +30,11 @@ def weather(name):
 def weatherAPI():
     try:
         conn = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'],int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
-        db = conn.doco #连接库
+        db = conn.weather #连接库
         db.authenticate("admin","16cFcmpKvWyl")
     except KeyError:
         conn = pymongo.MongoClient("127.0.0.1",27017)
-        db = conn.doco #连接库
+        db = conn.weather #连接库
 
     return json.dumps(list(db.weather.find({},{'_id':0})))
 
@@ -49,11 +49,11 @@ Your last visit is {time}</br>
 def say_hello(name):
     try:
         conn = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'],int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
-        db = conn.doco #连接库
+        db = conn.weather #连接库
         db.authenticate("admin","16cFcmpKvWyl")
     except KeyError:
         conn = pymongo.MongoClient("127.0.0.1",27017)
-        db = conn.doco #连接库
+        db = conn.weather #连接库
 
     visitor = db.visitors.find_one({"name":name})
     if not visitor:
