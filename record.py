@@ -29,13 +29,21 @@ class Record(Resource):
             rc = db.weather.find_one()
 
         rc['_id'] = str(rc['_id'])
-        return rc
+        return {'code': 0,
+                'msg': '',
+                'payload': {
+                    'data': rc,
+                    'count': db.weather.count()}
+                }
 
     @trace(__name__)
     def delete(self, idx=None):
         log.debug('deleteing [{0}]'.format(idx))
         db.weather.delete_one({"_id": ObjectId(idx)})
-        return {}
+        return {'code': 0,
+                'msg': '',
+                'payload': {}
+                }
 
 
 api.add_resource(Record,
