@@ -4,12 +4,8 @@ from flask import request
 from flask.ext.restful import Api, Resource
 from bson.objectid import ObjectId
 
-from logger import Logger
 from db import db
 
-l = Logger()
-trace = l.trace
-log = l.getlog()
 
 app = Blueprint("record", __name__)
 
@@ -21,10 +17,8 @@ def on_load(state):
 
 
 class Record(Resource):
-    @trace(__name__)
     def get(self, idx=None):
         if idx:
-            log.debug('getting [{0}]'.format(idx))
             rc = db.weather.find_one({"_id": ObjectId(idx)})
             rc['_id'] = str(rc['_id'])
         else:
@@ -43,9 +37,7 @@ class Record(Resource):
                     'count': db.weather.count()}
                 }
 
-    @trace(__name__)
     def delete(self, idx=None):
-        log.debug('deleteing [{0}]'.format(idx))
         db.weather.delete_one({"_id": ObjectId(idx)})
         return {'code': 0,
                 'msg': '',
