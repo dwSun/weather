@@ -25,7 +25,7 @@ class Logger():
         指定保存日志的文件路径，日志级别，以及调用文件
         将日志存入到指定的文件中
         '''
-        formatter = logging.Formatter('%(asctime)s - %(process)d - %(levelname)s - %(threadName)s:%(thread)d - %(filename)s:%(lineno)d - %(message)s')
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s')
 
         # 创建一个logger
         self.logger = logging.getLogger('weather')
