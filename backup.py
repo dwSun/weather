@@ -9,7 +9,7 @@ from multiprocessing.dummy import Pool
 from db import db
 from logger import Logger
 
-l = Logger()
+l = Logger('backuo.log', log_f=True)
 trace = l.trace
 log = l.getlog()
 
