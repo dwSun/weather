@@ -27,7 +27,6 @@ def getWeather(city):
         weather = response.json()
     else:
         sys.exit(0)
-    print(weather)
     try:
         conn = pymongo.MongoClient(os.environ['OPENSHIFT_MONGODB_DB_HOST'],
                                    int(os.environ['OPENSHIFT_MONGODB_DB_PORT']))
