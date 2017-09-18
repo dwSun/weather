@@ -27,7 +27,8 @@ def retrieve(idx):
         idx = weather['_id']
 
         weather['_id'] = ObjectId(idx)
-
+        
+        log.debug(idx)
         db.weather.save(weather)
         r = requests.delete(api.format(idx), timeout=60)
     except requests.exceptions.ConnectionError as ex:
