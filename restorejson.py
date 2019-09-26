@@ -15,7 +15,7 @@ log = l.getlog()
 
 
 def _handle_json(f):
-    conn = pymongo.MongoClient("127.0.0.1", 27017)
+    conn = pymongo.MongoClient("192.168.2.198", 27017)
     db = conn.weather  # 连接库
     log.debug('handle [{0}]'.format(f))
     with open(f) as jsons:

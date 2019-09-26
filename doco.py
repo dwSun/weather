@@ -24,7 +24,7 @@ def debug():
 @app.route('/weather/<string:name>' , methods=['GET'])
 def weather(name):
     log.debug('[{0}] weather fetch...'.format(name))
-    r = requests.get("http://api.map.baidu.com/telematics/v3/weather?location={0}&output=json&ak=9393a3754af3170551a239fd7bfd7011".format(name))
+    r = requests.get("http://api.map.baidu.com/telematics/v3/weather?location={0}&output=json&ak=ssssssssssssssssssssssss".format(name))
     if(r.status_code == 200):
         return render_template("weather.html",
                                data=json.loads(r.text)['results'][0])
